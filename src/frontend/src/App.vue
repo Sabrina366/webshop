@@ -10,10 +10,12 @@ import Nav from './components/Nav.vue'
 export default{
   components: {
   Nav,
-}
+  },
+mounted() {
+  this.$store.dispatch('getProducts')
 
 }
-
+}
 
 </script>
 
