@@ -1,5 +1,9 @@
 import { createStore } from "vuex" 
 
+function updateLocalStorage(cart){
+    localStorage.setItem('cart', JSON.stringify(cart))
+}
+
 const store = createStore({
     state:{
      urls:{
@@ -14,16 +18,38 @@ const store = createStore({
             {id: 6, title: "knitting", description: "Integer mattis risus ac euismod efficitur. Suspendisse malesuada aliquam egestas. Sed fringilla, nibh nec suscipit suscipit, urna magna lobortis nisi, quis facilisis dui nisi non sem.", price: 200, img: "src/assets/toy.jpg"}
         ],
      cart: [
-        {id: 1, title: "knitting", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", price: 200, img: "src/assets/toy.jpg"},
+        /* {id: 1, title: "knitting", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", price: 200, img: "src/assets/toy.jpg"},
         {id: 2, title: "knitting", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dolor sapien, porta cursus eleifend eget, facilisis ac diam. Sed non feugiat ex. Integer mattis risus ac euismod efficitur.", price: 200, img: "src/assets/toy.jpg"},
-        {id: 3, title: "knitting", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dolor sapien, porta cursus eleifend eget, facilisis ac diam.", price: 200, img: "src/assets/toy.jpg"},
+        {id: 3, title: "knitting", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dolor sapien, porta cursus eleifend eget, facilisis ac diam.", price: 200, img: "src/assets/toy.jpg"}, */
      ],
+    },
+    getters: {
+        productQuantity: state => product =>{
+            let item = state.cart.find(i => i.id === product.id)
+
+            if(item) return item.quantity
+            else return null
+        }
     },
     mutations:{
      setProducts(state, products) {
          state.products = products
      },
 
+     addToCart(state, product){
+         let item = state.cart.find(i => i.id === product.id)
+
+         if(item){
+             item.quantity++
+         }
+         else{
+            state.cart.push({...product, quantity: 1})
+        }
+
+        updateLocalStorage(state.cart)
+     },
+     
+     
        
     },
  

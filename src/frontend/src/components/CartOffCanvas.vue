@@ -24,7 +24,8 @@ export default {
       computed: {
         cart(){
        return this.$store.state.cart;
-    }
+    },
+    
   }
 
 
