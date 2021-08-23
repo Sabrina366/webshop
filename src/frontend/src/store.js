@@ -49,7 +49,13 @@ const store = createStore({
         updateLocalStorage(state.cart)
      },
      
-     
+     updateCartLocalStorage(state){
+         let cart = localStorage.getItem('cart')
+
+         if(cart){
+             state.cart = JSON.parse(cart)
+         }
+     },
        
     },
  

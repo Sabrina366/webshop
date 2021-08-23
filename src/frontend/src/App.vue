@@ -13,7 +13,7 @@ export default{
   },
 mounted() {
   this.$store.dispatch('getProducts')
-
+  this.$store.commit('updateCartLocalStorage')
 }
 }
 
