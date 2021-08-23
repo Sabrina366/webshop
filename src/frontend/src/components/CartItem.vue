@@ -8,7 +8,8 @@
       <div class="card-body">
         <h5 class="card-title">{{product.title}}</h5>
         <h6 class="card-text">{{product.price}}kr</h6>
-        <i class="fas fa-trash-alt"></i>
+        <p v-if="product_count" class="card-text">qty: {{product_count}}</p>
+        <button class="btn " @click="removeFromCart()"><i class="fas fa-trash-alt"></i></button>
       </div>
     </div>
   </div>
@@ -18,6 +19,16 @@
 <script>
 export default {
     props: ["product"],
+    methods:{
+      removeFromCart(){
+        return this.$store.commit('removeFromCart',this.product)
+      }
+    },
+    computed:{
+      product_count(){
+        return this.$store.getters.productQuantity(this.product)
+      }
+    }
 
 }
 </script>
