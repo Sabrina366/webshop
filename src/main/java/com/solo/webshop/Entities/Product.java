@@ -15,8 +15,24 @@ public class Product {
     private double price;
     private String img;
 
+    @ManyToOne
+    @JoinColumn(name="category_id", referencedColumnName = "id", nullable=false)
+    private Category category;
+
 
     public Product() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Product(String title, String description, double price, String img, Category category) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.img = img;
+        this.category = category;
     }
 
     public Product(String title, String description, double price, String img) {
@@ -24,10 +40,6 @@ public class Product {
         this.description = description;
         this.price = price;
         this.img = img;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getTitle() {
@@ -62,6 +74,14 @@ public class Product {
         this.img = img;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -70,7 +90,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", img='" + img + '\'' +
+                ", category=" + category +
                 '}';
     }
-
 }
