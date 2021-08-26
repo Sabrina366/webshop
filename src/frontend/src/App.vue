@@ -12,7 +12,7 @@ export default{
   Nav,
   },
 mounted() {
-  this.$store.dispatch('getProducts')
+  this.$store.dispatch('getCategories')
   this.$store.commit('updateCartLocalStorage')
 }
 }

@@ -1,6 +1,5 @@
 <template>
-  <nav class="navbar fixed-top 
-  navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><img src="" alt="" width="30" height="24">
     TinyPaws</a>
@@ -25,14 +24,16 @@
   </div>
   <CartOffCanvas />
 </nav>
-
+<SecondaryNav/>
 </template>
 
 <script>
 import CartOffCanvas from './CartOffCanvas.vue'
+import SecondaryNav from './SecondaryNav.vue'
 export default {
   components: {
-    CartOffCanvas
+    CartOffCanvas,
+    SecondaryNav
   }
   
 }

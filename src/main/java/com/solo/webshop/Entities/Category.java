@@ -1,7 +1,7 @@
 package com.solo.webshop.Entities;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 @Table(name = "categories")
@@ -13,10 +13,7 @@ public class Category {
 
     private String name;
 
-
-
-    public Category() {
-    }
+    public Category() { }
 
     public Category(String name) {
         this.name = name;
@@ -33,7 +30,6 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {

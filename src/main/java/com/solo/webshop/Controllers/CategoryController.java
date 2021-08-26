@@ -1,7 +1,6 @@
 package com.solo.webshop.Controllers;
 
 import com.solo.webshop.Entities.Category;
-import com.solo.webshop.Entities.Product;
 import com.solo.webshop.Services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
