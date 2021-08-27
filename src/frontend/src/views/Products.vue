@@ -1,10 +1,7 @@
 <template>
     <article>
-        
-        <div class="">
+        <h3>category</h3>
             <ProductItem v-for="(p, index) of products" :key="index" :product="p"/>
-        </div>
-        
     </article>
 </template>
 
@@ -19,14 +16,18 @@ export default {
     components: {
         ProductItem,
     },
-    
+    created(){
+        this.$store.dispatch('getProductsByCategory', this.$route.params.id)
+    },
+    beforeUpdate(){
+        this.$store.dispatch('getProductsByCategory', this.$route.params.id)
+    },
     computed: {
         products(){
-            return this.$store.state.products.filter( p => p.category.name === this.selected);
+            return this.$store.state.products;
+        }
     } 
   }
-
-}
 </script>
 
 <style>

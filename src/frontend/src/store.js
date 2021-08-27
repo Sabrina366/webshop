@@ -12,7 +12,10 @@ const store = createStore({
         products: [],
      cart: [],
 
-     categories: []
+     categories: [],
+     selected: {
+         category:[]
+     }
     },
     getters: {
         productQuantity: state => product =>{
@@ -79,10 +82,16 @@ const store = createStore({
             let data = await res.json()
             console.log(data)
             commit('setCategories', data)
-        },
- 
-         
+        },         
+    async getProductsByCategory({ commit, state }, id) {
+        console.log(id)
+        let res = await fetch(state.urls.springUrl + '/api/category/product/' + id)
+        let data = await res.json()
+        console.log(data)
+        commit('setProducts', data)
     },
+
+    }
  })
  
  export default store

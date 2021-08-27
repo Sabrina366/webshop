@@ -14,7 +14,7 @@ export default{
 mounted() {
   this.$store.dispatch('getCategories')
   this.$store.commit('updateCartLocalStorage')
-}
+  }
 }
 
 </script>
