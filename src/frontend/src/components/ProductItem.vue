@@ -5,7 +5,7 @@
     <h6 class="card-title">{{product.title}}</h6>
     <p class="card-text">{{ product.description.substring(0, 60) }}</p>
     <h6 class="card-text">{{product.price}}kr</h6>
-    <button @click="addToCart()" class="btn btn-primary">Buy</button>
+    <a class="btn btn-primary"><router-link :to="'/product/' + product.id">Buy</a>
   </div>
 </div>
 </template>

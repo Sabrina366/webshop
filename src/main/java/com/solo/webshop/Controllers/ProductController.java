@@ -23,7 +23,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("api/products/{id}")
+    @GetMapping("api/product/{id}")
     public Optional<Product> getProductById(@PathVariable int id){
         return productService.getProductById(id);
     }

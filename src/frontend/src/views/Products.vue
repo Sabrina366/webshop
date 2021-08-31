@@ -16,11 +16,12 @@ export default {
     components: {
         ProductItem,
     },
-    created(){
-        this.$store.dispatch('getProductsByCategory', this.$route.params.id)
-    },
+    /*   
     beforeUpdate(){
         this.$store.dispatch('getProductsByCategory', this.$route.params.id)
+    }, */
+    methods:{
+
     },
     computed: {
         products(){

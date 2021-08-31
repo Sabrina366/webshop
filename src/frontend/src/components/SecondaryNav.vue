@@ -1,15 +1,8 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-light bg-light stícky-top shadow-sm">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+<nav class="navbar navbar-light sticky-top shadow-sm justify-content-center" style="background-color: #e3f2fd;">
+      <ul class="nav ">
         <Category v-for="(c, index) of categories" :key="index" :category="c"/>
       </ul>
-    </div>
-  </div>
 </nav>
 </template>
 
@@ -21,7 +14,7 @@ export default {
   },
   data (){
     return{
-      seleced: ''
+      
     }
   },
   

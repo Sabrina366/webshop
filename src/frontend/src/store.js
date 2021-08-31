@@ -9,6 +9,17 @@ const store = createStore({
      urls:{
          springUrl: 'http://127.0.0.1:8080',
      },
+     product: {
+         id: '',
+         title: '',
+         description: '',
+         price: '', 
+         img: '',
+         category:{
+             id: '',
+             name: ''
+         }
+     },
         products: [],
      cart: [],
 
@@ -29,6 +40,9 @@ const store = createStore({
      setProducts(state, products) {
          state.products = products
      },
+     setProduct(state, product) {
+        state.product = product
+    },
      setCategories(state, categories) {
         state.categories = categories
     },
@@ -89,6 +103,13 @@ const store = createStore({
         let data = await res.json()
         console.log(data)
         commit('setProducts', data)
+    },
+    async getProduct({ commit, state }, id) {
+        console.log(id)
+        let res = await fetch(state.urls.springUrl + '/api/product/' + id)
+        let data = await res.json()
+        console.log(data)
+        commit('setProduct', data)
     },
 
     }
