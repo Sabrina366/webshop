@@ -24,7 +24,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    /*public Order addOrderLineToOrder(int orderId, int orderLineId){
+    /*public Order addOrderLinesToOrder(int orderId, int orderLineId){
         Order order = getOrderById(orderId);
         OrderLine orderline = orderLineService.getOrderLineById(orderLineId);
         return Order;

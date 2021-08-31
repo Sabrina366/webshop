@@ -20,4 +20,14 @@ public class ProductService {
     public Optional<Product> getProductById(int id){
         return productRepository.findById(id);
     }
+
+    public List<Product> getAllProductsByCategoryId(int id){
+        return productRepository.getAllProductsByCategoryId(id);
+    }
+
+    public List<Product> getProductsBySearch(String search){
+        return productRepository.getAllProductsBySearch(search);
+    }
+
+
 }

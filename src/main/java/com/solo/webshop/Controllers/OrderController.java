@@ -1,6 +1,7 @@
 package com.solo.webshop.Controllers;
 
 import com.solo.webshop.Entities.Order;
+import com.solo.webshop.Services.OrderLineService;
 import com.solo.webshop.Services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +16,16 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    OrderLineService orderLineService;
+
     @GetMapping("api/order/{id}")
     public Optional<Order> getOrderById(@PathVariable int id){
         return orderService.getOrderById(id);
     }
 
     @PostMapping("api/postorder")
-    public Order postOrder(Order order){
-        return orderService.addOrder(order);
+    public void postOrder(Order order){
+        orderService.addOrder(order);
     }
 }

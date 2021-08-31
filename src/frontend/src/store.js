@@ -69,8 +69,45 @@ const store = createStore({
          let data = await res.json()
          commit('setProducts', data)
      },
- 
-         
+        async getCategories({ commit, state }) {
+                let res = await fetch(state.urls.springUrl + '/api/categories')
+            let data = await res.json()
+            console.log(data)
+            commit('setCategories', data)
+        },         
+    async getProductsByCategory({ commit, state }, id) {
+        console.log(id)
+        let res = await fetch(state.urls.springUrl + '/api/category/product/' + id)
+        let data = await res.json()
+        console.log(data)
+        commit('setProducts', data)
+    },
+    async getProductsByCategory({ commit, state }, id) {
+        console.log(id)
+        let res = await fetch(state.urls.springUrl + '/api/category/product/' + id)
+        let data = await res.json()
+        console.log(data)
+        commit('setProducts', data)
+    },
+    async searchForProduct({commit, state}, search){
+        let res = await fetch(state.urls.springUrl + '/api/search', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(search)
+        })
+        let data = await res.json()
+        commit('setProducts', data)
+    },
+    async postOrder({state}){
+        let res = await fetch(state.urls.springUrl + '/api/items', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(state.cart)
+        })
+        let data = await res.json()
+        console.log(data)
+    }
+
     }
  })
  

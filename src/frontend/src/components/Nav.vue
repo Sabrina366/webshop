@@ -5,8 +5,8 @@
     <a class="navbar-brand" href="#"><img src="" alt="" width="30" height="24">
     TinyPaws</a>
     <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-primary" type="submit">Search</button>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="search">
+        <button  class="btn btn-primary" type="submit" @click.prevent="searchForProducts()">Search</button>
       </form>
     <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -32,10 +32,22 @@
 import CartOffCanvas from './CartOffCanvas.vue'
 export default {
   components: {
-    CartOffCanvas
+    CartOffCanvas,
+
+  },
+  data(){
+    return{
+      search: ''
+    }
+  },
+  methods: {
+    searchForProducts(){
+      this.$store.dispatch('searchForProducts', this.search)
+    }
   }
   
 }
+
 
 </script>
 

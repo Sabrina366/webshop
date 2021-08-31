@@ -22,7 +22,7 @@ export default {
       },
       methods:{
         checkout(){ 
-          this.$router.push({ name: 'Checkout',params:{id:this.len}}) 
+          this.$store.dispatch('postOrder')
         }
       },
       computed: {
