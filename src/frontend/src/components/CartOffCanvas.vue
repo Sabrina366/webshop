@@ -7,7 +7,7 @@
   <div class="offcanvas-body">
     <CartItem v-for="(p, index) of cart" :key="index" :product="p"/>
     <div class="d-md-block">
-        <button type="button" class="btn btn-primary btn-sm">Checkout</button>
+        <button type="button" class="btn btn-primary btn-sm" @click="checkout()">Checkout</button>
     </div>
   </div>
   
@@ -19,6 +19,11 @@ import CartItem from './CartItem.vue'
 export default {
       components: {
           CartItem 
+      },
+      methods:{
+        checkout(){ 
+          this.$router.push({ name: 'Checkout',params:{id:this.len}}) 
+        }
       },
       computed: {
         cart(){
