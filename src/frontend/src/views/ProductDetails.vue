@@ -1,14 +1,13 @@
 <template>
   <div class="container">
-		<div class="card">
+		<!-- <div class="card">
 			<div class="container-fliud">
 				<div class="wrapper row">
-					<div class="preview col-md-6">
+					<div class=" col-md-6">
 						
 						<div class="preview-pic tab-content">
 						  <div class="tab-pane active" id="pic-1"><img :src="product.img" /></div>
 						</div>
-						
         			</div>
 					<div class="details col-md-6">
 						<h3 class="product-title">{{product.title}}</h3>
@@ -18,7 +17,7 @@
 							<button @click="addToCart()" class= "btn btn-primary" type="button">add to cart</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 </template>
 
@@ -37,7 +36,6 @@ export default {
         this.$store.commit('addToCart', this.product)
       }
     }
-
 }
 </script>
     

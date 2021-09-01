@@ -92,7 +92,7 @@ const store = createStore({
          commit('setProducts', data)
      },
         async getCategories({ commit, state }) {
-                let res = await fetch(state.urls.springUrl + '/api/categories')
+            let res = await fetch(state.urls.springUrl + '/api/categories')
             let data = await res.json()
             console.log(data)
             commit('setCategories', data)
