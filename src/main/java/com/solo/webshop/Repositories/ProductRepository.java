@@ -1,15 +1,15 @@
 package com.solo.webshop.Repositories;
 
 import com.solo.webshop.Entities.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Integer>{
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "SELECT * FROM products u WHERE u.category_id = :id",
             nativeQuery = true)

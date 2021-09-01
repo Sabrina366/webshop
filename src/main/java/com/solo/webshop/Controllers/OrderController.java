@@ -1,11 +1,14 @@
 package com.solo.webshop.Controllers;
 
 import com.solo.webshop.Entities.Order;
+import com.solo.webshop.Entities.OrderLine;
 import com.solo.webshop.Services.OrderLineService;
 import com.solo.webshop.Services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -25,7 +28,9 @@ public class OrderController {
     }
 
     @PostMapping("api/postorder")
-    public void postOrder(Order order){
+    public void postOrder(ArrayList<OrderLine> orderLines){
+        Order order = new Order();
+        order.setOrderLines(orderLines);
         orderService.addOrder(order);
     }
 }

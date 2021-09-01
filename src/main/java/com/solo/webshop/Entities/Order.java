@@ -1,11 +1,8 @@
 package com.solo.webshop.Entities;
 
 import javax.persistence.*;
-import javax.print.attribute.standard.DateTimeAtCreation;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +21,10 @@ public class Order{
 
     @OneToMany(mappedBy = "order",  cascade = CascadeType.PERSIST)
     private List<OrderLine> orderLines = new ArrayList<>();
+
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
 
     public Order() {
     }
