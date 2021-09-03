@@ -35,18 +35,25 @@ const util = require('util')
 db.connect = util.promisify(db.connect)
 db.query = util.promisify(db.query)
 
-
+//get categories
 app.get("/rest/categories", async (req, res) => {
   let query = "SELECT * FROM categories"
   let result = await db.query(query)
   res.json(result)
 })
 
-app.get("/rest/products", async (req, res) => {
-  let query = "SELECT * FROM products"
-  let result = await db.query(query)
+//get products by category
+app.get("/rest/categories/:id", async (req, res) => {
+  let result = await db.query("SELECT * FROM products WHERE category_id = ?", [req.params.id])
   res.json(result)
 })
+
+//get one product
+app.get("/rest/products/:id", async (req, res) => {
+  let result = await db.query("SELECT * FROM products WHERE id = ?", [req.params.id])
+  res.json(result)
+})
+
 
  
 // start av webbservern
