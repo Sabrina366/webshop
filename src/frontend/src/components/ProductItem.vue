@@ -3,7 +3,6 @@
   <img :src="product.img" class="card-img-top" alt="...">
   <div class="card-body">
     <h6 class="card-title">{{product.title}}</h6>
-    <p>{{product.category.name}}</p>
     <p class="card-text">{{ product.description.substring(0, 60) }}</p>
     <h6 class="card-text">{{product.price}}kr</h6>
     <a class="btn btn-outline"><router-link :to="'/product/' + product.id">Buy</router-link></a>
