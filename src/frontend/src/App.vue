@@ -11,9 +11,12 @@ export default{
   components: {
   Nav,
   },
-mounted() {
-  this.$store.dispatch('getCategories')
-  this.$store.commit('updateCartLocalStorage')
+  created(){
+    this.$store.dispatch('getCategories')
+    this.$store.dispatch('getProduct', 7)
+  },
+  mounted() {
+    this.$store.commit('updateCartLocalStorage')
   }
 }
 
