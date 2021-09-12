@@ -11,23 +11,18 @@ export default{
   components: {
   Nav,
   },
-mounted() {
-  this.$store.dispatch('getProducts')
-  this.$store.commit('updateCartLocalStorage')
-}
+  created(){
+    this.$store.dispatch('getCategories')
+    this.$store.dispatch('getProduct', 7)
+  },
+  mounted() {
+    this.$store.commit('updateCartLocalStorage')
+  }
 }
 
 </script>
 
 <style>
-  *{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} 
-#app{
-  width: 100vw;
-  min-height: 100vh; 
-}
+
 </style>
 
