@@ -22,7 +22,6 @@ app.use( session( {
   cookie: { secure: false } // ändra till true för secure cookie (felsöka behövs här nu)
 } ) )
 
-
 // mysql
 const mysql = require('mysql');
 const db = mysql.createConnection({
@@ -38,7 +37,6 @@ db.query = util.promisify(db.query)
 
 
 // REST routes (endpoints)
-
 app.get("/rest/categories", async (req, res) => {
   let query = "SELECT * FROM categories"
   let result = await db.query(query)
@@ -48,6 +46,36 @@ app.get("/rest/categories", async (req, res) => {
 app.get("/rest/categories/:id", async (req, res) => {
   let result = await db.query("SELECT * FROM products WHERE category_id = ?", [req.params.id])
   res.json(result)
+})
+
+app.get("/rest/product", async (req, res) => {
+  let result = await db.query("SELECT * FROM products WHERE title LIKE ?", ['%' + req.query.title + '%'])
+  res.json(result)
+})
+
+app.get("/rest/order", async (req, res) => {
+    // check if user exists before writing
+    if(!request.session.user){
+      response.status(401) // unauthorised
+      response.json({error:'not logged in'})
+      return;
+    }
+    let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.unit_price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ? ORDER BY ol.order_id", [req.session.user.id])
+    response.json(result)
+})
+
+app.post("/rest/order/new", async (req, res) => {
+  let id = req.body.id
+  let cart = req.body.cart
+  console.log(cart)
+  let order = await db.query("INSERT INTO orders SET user_id = ?", [id])
+  if(order.insertId){
+    cart.forEach(async (item) => {
+      item["order_id"] = order.insertId
+      await db.query("INSERT INTO orderlines SET ?", [item])
+    });
+  }
+  res.json(order)
 })
 
 app.post('/rest/cart-item', async (request, response) => {
@@ -142,36 +170,6 @@ app.delete('/rest/login', async (request, response) => {
   } )
 })
 
-
-// Exempel på dynamiska routes:
-/*
-
-// dynamisk route till vilken tabell som helst, säkerhetsrisk?
-// route där front-end kan hämta data ifrån övriga tabeller
-// ex:   /rest/orders
-// ex:   /rest/cars
-app.get("/rest/:table", async (req, res) => {
-  let query = "SELECT * FROM ??"
-  let result = await db.query(query, [req.params.table])
-  res.json(result)
-})
-
-// dynamisk route med id
-// ex: /rest/hotels_in_cities/2   |  SELECT * FROM hotels_in_cities WHERE id = 2
-app.get("/rest/:table/:id", async (req, res) => {
-  let query = "SELECT * FROM ?? WHERE id = ?"
-  let result = await db.query(query, [req.params.table])
-  res.json(result)
-})
-
-// dynamisk post - SKA FUNKA SÅ HÄR, men ???
-app.post("/rest/:table", async (req, res) => {
-  let query = "INSERT INTO ?? SET ?"
-  let result = await db.query(query, req.body)
-  console.log(query.sql)
-  res.json(result)
-})
-*/
 
 // start av webbservern
 app.listen(3000, async () => {
