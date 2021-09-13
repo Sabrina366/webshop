@@ -6,9 +6,11 @@ function updateLocalStorage(cart){
 
 const store = createStore({
     state:{
-     urls:{
-         springUrl: 'http://127.0.0.1:8080',
+     user: {
+         loggedIn: false,
      },
+     orderhistory: [],
+     order: '',
      product: {
          id: '',
          title: '',
@@ -20,13 +22,10 @@ const store = createStore({
              name: ''
          }
      },
-        products: [],
-     cart: [],
-
-     categories: [],
-     selected: {
-         category:[]
-     }
+    products: [],
+    cart: [],
+    categories: [],
+    selectedCategory: '',
     },
     getters: {
         productQuantity: state => product =>{
@@ -37,16 +36,24 @@ const store = createStore({
         }
     },
     mutations:{
-     setProducts(state, products) {
+     setProducts(state, products){
          state.products = products
      },
-     setProduct(state, product) {
+     setProduct(state, product){
         state.product = product
     },
-     setCategories(state, categories) {
+     setCategories(state, categories){
         state.categories = categories
     },
-
+     setUser(state, user){
+        state.user = user
+     },
+     setOrderHistory(state, orders){
+        state.ordersHistory = orders
+     },
+     setOrder(state, order){
+        state.order = order
+     },
      addToCart(state, product){
          let item = state.cart.find(i => i.id === product.id)
 
@@ -80,27 +87,28 @@ const store = createStore({
             }
         }
         updateLocalStorage(state.cart)
-     }
-    },
- 
-    actions:{
-     async getProducts({ commit, state }) {
-         let res = await fetch(state.urls.springUrl + '/api/products')
-         let data = await res.json()
-         commit('setProducts', data)
      },
+     setSelectedCategory(state, category){
+        this.state.selectedCategory = category
+    }
+ 
+    },
+
+    actions:{
         async getCategories({ commit, state }) {
-            let res = await fetch('/rest/products/categories')
+            let res = await fetch('/rest/categories')
             let data = await res.json()
             console.log(data)
             commit('setCategories', data)
         },         
-    async getProductsByCategory({ commit, state }, id) {
-        console.log(id)
-        let res = await fetch('/rest/products/category/' + id)
+    async getProductsByCategory({ commit, state }, category) {
+        console.log(category.id)
+        let res = await fetch('/rest/categories/' + category.id)
         let data = await res.json()
         console.log(data)
         commit('setProducts', data)
+        commit('setSelectedCategory', category)
+        
     },
     async getProduct({ commit, state }, id) {
         console.log(id)
@@ -109,6 +117,48 @@ const store = createStore({
         console.log(data)
         commit('setProduct', data)
     },
+    async login({dispatch}, credentials){
+        let res = await fetch('/rest/login', {
+            method: 'post',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify(credentials)
+        })
+        let data = await res.json()
+        dispatch('getLoggedInUser')
+    },
+    async getLoggedInUser({commit}){
+        let res = await fetch('/rest/login')
+        let data = await res.json()
+        commit('setUser', data)
+    },
+    async logout({dispatch}){
+        let res = await fetch('/rest/login', {
+            method: 'delete'
+        })
+        dispatch('getLoggedInUser')
+    },
+    async getOrderHistory({commit}){
+        console.log('getting orders')
+        let res = await fetch('/rest/order')
+        let data = await res.json()
+        console.log(data)
+        commit('setOrderHistory', data)
+    },
+    async getOrder({commit}, id){
+        let res = await fetch('/rest/order/' + id)
+        let data = await res.json()
+        commit('setOrder', data)
+    },
+    async crateOrder({dispatch}, {id, cart}){
+        let res = await fetch('/rest/order', {
+            method: 'post',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({id, cart})
+        })
+        let data = await res.json()
+        console.log(data)
+        dispatch('getOrder', data.insertId)
+        }
     }
  })
  

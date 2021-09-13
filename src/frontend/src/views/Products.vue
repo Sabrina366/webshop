@@ -1,38 +1,46 @@
 <template>
-    <article>
-        <h3>category</h3>
-        <div class="container">
-            <div class="row">
-                <div class="">
-                    <ProductItem v-for="(p, index) of products" :key="index" :product="p" />
-                </div>
-            </div>
-        </div>
+    <article calss="home">
+       <h3 >{{selectedCategory.name}}</h3>
+        <section class="product">
+            <ProductItem v-for="(p, index) of products" :key="index" :product="p"/>
+        </section>
     </article>
 </template>
 
 <script>
 import ProductItem from '../components/ProductItem.vue';
 export default {
-    data(){
-        return{
-            selected: ''
-        }
-    },
     components: {
         ProductItem,
-    },
-    methods:{
-
     },
     computed: {
         products(){
             return this.$store.state.products;
+        },
+        selectedCategory(){
+            return this.$store.state.selectedCategory
         }
     } 
   }
 </script>
 
-<style>
-
+<style scoped>
+.home{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: whitesmoke;
+    overflow: hidden;
+}
+h3{
+    padding: 15px;
+    margin: auto;
+}
+.product{
+    display: flex;
+    max-width: 1200px;
+    padding: 25px;
+    margin: 0px auto;
+    flex-wrap: wrap;
+}
 </style>

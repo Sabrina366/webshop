@@ -1,23 +1,29 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="" alt="" width="30" height="24"><router-link to="/">
-      TinyPaws
-    </router-link>
-    </a>
-    <form class="d-flex">
-        <input v-model="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-sm btn-outline-primary" type="button">Search</button>
+<div class="wrapper">
+    <nav >
+    <ul>
+      <li>
+        <router-link to="/">
+        <img src="" alt="" width="30" height="24">
+      </router-link>
+      </li>
+      <li>
+        <form>
+        <input v-model="search" type="search" placeholder="Search for a product..." />
+        <button type="button">Search</button>
       </form>
-    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Cart</button>
-  </div>
-  <CartOffCanvas/>
+      </li>
+      <li>
+        <router-link to="/login">Log in</router-link>
+      </li>
+      <li>
+        <i class="fas fa-shopping-basket"></i> <!-- lägg til länk till cart -->
+      </li>
+    </ul>
+  <!-- <CartOffCanvas/> -->
 </nav>
+</div>
 <SecondaryNav/>
-
 </template>
 
 <script>
@@ -38,6 +44,40 @@ export default {
 
 </script>
 
-<style>
-
+<style scoped>
+button{
+    margin: 0 2px;
+}
+button:hover{
+    background-color: #e0ecd2
+}
+.wrapper{
+    width: 100%;
+    margin: 0 auto;
+}
+nav li{
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    color:whitesmoke;
+    display: block;
+    padding: 10px;
+}
+nav ul{
+    list-style-type: none;
+    padding: 0;
+}
+ul{
+    background-color: #c0d39a;
+}
+nav li:hover{
+    background-color: #b3c58f;
+}
+@media screen and (min-width: 768px){
+nav ul{
+    display: flex;
+    justify-content: flex-start;
+    padding-right: 15px;
+}
+}
 </style>

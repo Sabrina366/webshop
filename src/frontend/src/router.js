@@ -3,18 +3,21 @@ import Home from './views/Home.vue';
 import Products from './views/Products.vue'
 import Cart from './views/Cart.vue'
 import ProductDetails from './views/ProductDetails.vue'
+import Login from './views/Login.vue'
+import Account from './views/Account.vue'
 
 const routes = [
-    { path: '/', name: 'Home', component: Home, },
+    { path: '/', name: 'Home', component: Home },
 
-    { path: '/products/:id', name: 'Products', component: Products, },
+    { path: '/products', name: 'Products', component: Products },
     
-    { path: '/cart', name: 'Cart', component: Cart, },
+    { path: '/cart', name: 'Cart', component: Cart },
 
-    ,
-    {   path: '/product/:id',
-        name: 'ProductDetails',
-        component: ProductDetails,},
+    {   path: '/product/:id', name: 'ProductDetails', component: ProductDetails },
+    
+    { path: '/login', name: 'Login', component: Login },
+
+    { path: '/account', name: 'Account', component: Account }
     
 ]
 

@@ -18,9 +18,9 @@ let session = require('express-session')
 app.use( session( {
   secret: 'keyboard cat jksfj<khsdka',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false, //ändrade till false, testa nu!
   cookie: { secure: false } // ändra till true för secure cookie (felsöka behövs här nu)
-} ) )
+}))
 
 // mysql
 const mysql = require('mysql');
@@ -54,17 +54,20 @@ app.get("/rest/product", async (req, res) => {
 })
 
 app.get("/rest/order", async (req, res) => {
+    console.log(req.session.user.id)
     // check if user exists before writing
-    if(!request.session.user){
-      response.status(401) // unauthorised
-      response.json({error:'not logged in'})
+    if(!req.session.user){
+      res.status(401) // unauthorised
+      res.json({error:'not logged in'})
       return;
     }
-    let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.unit_price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ? ORDER BY ol.order_id", [req.session.user.id])
-    response.json(result)
+
+    let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.unit_price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ?", [req.session.user.id])
+    console.log(result)
+    res.json(result)
 })
 
-app.post("/rest/order/new", async (req, res) => {
+app.post("/rest/order", async (req, res) => {
   let id = req.body.id
   let cart = req.body.cart
   console.log(cart)
@@ -126,13 +129,13 @@ app.delete('/rest/cart-item/:id', async (request, response) => {
 // registrera en ny användare
 app.post('/rest/users', async (request, response) => {
   let user = request.body
-  let result = await db.query('INSERT INTO users SET ?', [user])
+  let result = await db.query('INSERT INTO user SET ?', [user])
   response.json(result)
 })
 
 // logga in
 app.post('/rest/login', async (request, response) => {
-  let user = await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [request.body.email, request.body.password])
+  let user = await db.query('SELECT * FROM user WHERE email = ? AND password = ?', [request.body.email, request.body.password])
 
   user = user[0] // resultatet av min SELECT blir en array, vi är bara intresserade av första elementet (vårt user objekt)
 
@@ -150,7 +153,7 @@ app.post('/rest/login', async (request, response) => {
 app.get('/rest/login', async (request, response) => {
   let user
   if(request.session.user){
-    user = await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [request.session.user.email, request.session.user.password])
+    user = await db.query('SELECT * FROM user WHERE email = ? AND password = ?', [request.session.user.email, request.session.user.password])
     user = user[0]
   }
   if(user && user.email){
