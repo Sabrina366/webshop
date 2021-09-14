@@ -79,10 +79,10 @@ nav ul{
     padding: 0;
 }
 ul{
-    background-color: #c0d39a;
+    background-color:lightblue;
 }
 nav li:hover{
-    background-color: #b3c58f;
+    
 }
 @media screen and (min-width: 768px){
 nav ul{

@@ -1,11 +1,15 @@
 <template>
   <div>
-      <h4>My TinyPaws</h4>
-      <p>Welcome to your page {{user.first_name}}!</p>
-
-      <h5>My Account</h5>
-      <p>Personal Information</p>
-      <p>My Orders</p>
+      <div>
+        <h4>My TinyPaws</h4>
+        <p>Welcome to your page {{user.first_name}}!</p>
+      </div>
+      <div>
+        <h5>My Account</h5>
+        <p>Personal Information</p>
+        <p>My Orders</p>
+      </div>
+      
       <button @click="getOrders">orders</button>
       <div>
           <button @click="logout">

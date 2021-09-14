@@ -148,13 +148,14 @@ const store = createStore({
     async getOrder({commit}, id){
         let res = await fetch('/rest/order/' + id)
         let data = await res.json()
+        console.log(data)
         commit('setOrder', data)
     },
-    async createOrder({dispatch}, {cart}){
+    async createOrder({dispatch}, products){
         let res = await fetch('/rest/order', {
             method: 'post',
             headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({cart})
+            body: JSON.stringify(products)
         })
         let data = await res.json()
         console.log(data)

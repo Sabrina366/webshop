@@ -62,25 +62,25 @@ app.get("/rest/order", async (req, res) => {
       return;
     }
 
-    let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.unit_price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ?", [req.session.user.id])
+    let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ?", [req.session.user.id])
     console.log(result)
     res.json(result)
 })
 
 app.post("/rest/order", async (req, res) => {
-  if(!request.session.user){
-    response.status(401) // unauthorised
-    response.json({error:'not logged in'})
+  if(!req.session.user){
+    res.status(401) // unauthorised
+    res.json({error:'not logged in'})
     return;
   }
   //skicka med ordenrns totala värde?
-  let cart = req.body.cart
-  console.log(cart)
+  let products = req.body
+  console.log(products)
   let order = await db.query("INSERT INTO orders SET user_id = ?", [req.session.user.id])
   if(order.insertId){
-    cart.forEach(async (item) => {
-      item["order_id"] = order.insertId
-      await db.query("INSERT INTO orderlines SET ?", [item])
+      products.forEach(async (item) => {
+      //item["order_id"] = order.insertId
+      await db.query("INSERT INTO orderlines SET product_id = ?, price = ?, quantity = ?, order_id = ?", [item.id, item.price, item.quantity, order.insertId] )
     });
   }
   res.json(order)

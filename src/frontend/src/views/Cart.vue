@@ -1,9 +1,10 @@
 <template>
   <div >
+    <h3>In Cart</h3>
     <div>
     <CartItem v-for="(p, index) of cart" :key="index" :product="p"/>
     <div >
-        <button @click="placeOrder()" type="button" >Checkout</button>
+        <button @click="placeOrder" type="button" >Checkout</button>
     </div>
   </div>
   
@@ -18,7 +19,9 @@ export default {
       },
       methods: {
         placeOrder(){
-          this.$store.dispatch('createOrder()', cart) //skicka med cart, glöm ej skicka med rätt property-namn etc
+          let products = this.$store.state.cart
+          console.log(products)
+          this.$store.dispatch('createOrder', products) //skicka med cart, glöm ej skicka med rätt property-namn etc
         }
       },
       computed: {

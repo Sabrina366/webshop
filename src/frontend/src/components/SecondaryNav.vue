@@ -40,14 +40,15 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  background-color: darkseagreen;
+  background-color:lightblue;
   padding: 10px;
 }
  nav .sub-menu{
   position: absolute;
-  background-color:darkseagreen;
+  background-color: lightblue;
   padding: 10px;
   width: max-content;
+  color: white;
 }
 nav .menu-item{
   cursor: pointer;
@@ -60,6 +61,7 @@ nav .menu-item:hover {
 nav .menu-item a {
   color: inherit;
   text-decoration: none;
+  color: white;
 }
 .fade-enter-active,
 .fade-leave-active {
