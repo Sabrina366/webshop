@@ -5,6 +5,8 @@ import Cart from './views/Cart.vue'
 import ProductDetails from './views/ProductDetails.vue'
 import Login from './views/Login.vue'
 import Account from './views/Account.vue'
+import Order from './components/Order.vue'
+
 
 const routes = [
     { path: '/', name: 'Home', component: Home },
@@ -17,7 +19,9 @@ const routes = [
     
     { path: '/login', name: 'Login', component: Login },
 
-    { path: '/account', name: 'Account', component: Account }
+    { path: '/account', name: 'Account', component: Account },
+
+    { path: '/order', name: 'Order', component: Order}
     
 ]
 

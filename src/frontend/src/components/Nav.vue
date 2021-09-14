@@ -10,7 +10,7 @@
       <li>
         <form>
         <input v-model="search" type="search" placeholder="Search for a product..." />
-        <button type="button">Search</button>
+        <button @click="getorder" type="button">Search</button>
       </form>
       </li>
       <li>
@@ -18,7 +18,7 @@
         <router-link v-if="loggedIn" to="/account">My Account</router-link>
       </li>
       <li>
-        <span class="fas fa-shopping-basket"><router-link to="/cart"></router-link></span> <!-- lägg til länk till cart -->
+        <router-link to="/cart">cart</router-link> <!-- lägg til länk till cart -->
       </li>
     </ul>
   <!-- <CartOffCanvas/> -->
@@ -34,6 +34,11 @@ export default {
   components: {
     CartOffCanvas,
     SecondaryNav
+  },
+  methods:{
+    getorder(){
+      this.$store.dispatch('getOrder', 71)
+    }
   },
   computed: {
     loggedIn(){

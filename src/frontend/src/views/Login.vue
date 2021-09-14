@@ -14,6 +14,7 @@ export default {
         login(){
             let credentials = {email: this.email, password: this.password}
             this.$store.dispatch('login', credentials)
+            this.$router.push('/')
         }
     },
     computed: {

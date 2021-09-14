@@ -9,8 +9,12 @@ const store = createStore({
      user: {
          loggedIn: false,
      },
-     orderhistory: [],
-     order: '',
+     orderHistory: [],
+     order: {
+         id: '',
+         timestamp: '',
+         products: []
+     },
      product: {
          id: '',
          title: '',
@@ -31,6 +35,8 @@ const store = createStore({
         productQuantity: state => product =>{
             const item = state.cart.find(i => i.id === product.id)
 
+
+
             if(item) return item.quantity
             else return null
         }
@@ -49,10 +55,28 @@ const store = createStore({
         state.user = user
      },
      setOrderHistory(state, orders){
-        state.ordersHistory = orders
+        let orderhistory = []
+        orders.orders.forEach(element => {
+            element["items"] = []
+            orders.products.forEach( p => {
+                if(p.order_id === element.id){
+                    
+                    element.items.push(p)
+                }
+            })
+            orderhistory.push(element)
+            
+        });
+        console.log(orderhistory)
+        state.orderHistory = orderhistory
      },
      setOrder(state, order){
-        state.order = order
+         console.log(order)
+         console.log(order.order)
+         console.log(order.products)
+        state.order.id = order.order[0].id
+        state.order.timestamp = order.order[0].timestamp
+        state.order.products = order.products
      },
      addToCart(state, product){
          let item = state.cart.find(i => i.id === product.id)
@@ -148,7 +172,6 @@ const store = createStore({
     async getOrder({commit}, id){
         let res = await fetch('/rest/order/' + id)
         let data = await res.json()
-        console.log(data)
         commit('setOrder', data)
     },
     async createOrder({dispatch}, products){
@@ -158,7 +181,6 @@ const store = createStore({
             body: JSON.stringify(products)
         })
         let data = await res.json()
-        console.log(data)
         dispatch('getOrder', data.insertId)
         }
     }

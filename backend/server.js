@@ -32,6 +32,7 @@ const db = mysql.createConnection({
 });
 // vi gör om metoderna connect och query till promise-metoder så att vi kan använda async/await för att vänta på databasen
 const util = require('util')
+const { json } = require('body-parser')
 db.connect = util.promisify(db.connect)
 db.query = util.promisify(db.query)
 
@@ -61,11 +62,37 @@ app.get("/rest/order", async (req, res) => {
       res.json({error:'not logged in'})
       return;
     }
-
-    let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ?", [req.session.user.id])
-    console.log(result)
-    res.json(result)
+    let orders = await db.query("SELECT o.id, o.timestamp FROM orders as o WHERE user_id = ?", [req.session.user.id])
+    let products = await db.query("SELECT ol.order_id, p.title, ol.price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE user_id = ?", [req.session.user.id])
+    console.log(orders, products)
+    res.json({orders, products})
 })
+
+app.get("/rest/order/:id", async (req, res) => {
+   // check if user exists before writing
+  if(!req.session.user){
+    res.status(401) // unauthorised
+    res.json({error:'not logged in'})
+    return;
+  } 
+  let order = await db.query("SELECT o.id, o.timestamp FROM orders as o WHERE id = ?", [req.params.id])
+  let products = await db.query("SELECT ol.price , ol.quantity, p.title FROM orderlines as ol JOIN products as p ON p.id = ol.product_id WHERE ol.order_id = ? ", [req.params.id])
+  res.json({order, products})
+})
+
+
+/* app.get("/rest/order/:id", async (req, res) => {
+  console.log(req.session.user.id)
+  // check if user exists before writing
+  if(!req.session.user){
+    res.status(401) // unauthorised
+    res.json({error:'not logged in'})
+    return;
+  }
+  let result = await db.query("SELECT o.id, o.timestamp, p.title, ol.price, ol.quantity FROM orders as o JOIN orderlines as ol ON o.id = ol.order_id JOIN products as p ON ol.product_id = p.id WHERE order_id = ?", [req.params.id])
+  console.log(result)
+  res.json(result)
+}) */
 
 app.post("/rest/order", async (req, res) => {
   if(!req.session.user){
@@ -84,51 +111,6 @@ app.post("/rest/order", async (req, res) => {
     });
   }
   res.json(order)
-})
-
-app.post('/rest/cart-item', async (request, response) => {
-  // check if user exists before writing
-  if(!request.session.user){
-    response.status(401) // unauthorised
-    response.json({error:'not logged in'})
-    return;
-  }
-  let cartItem = request.body
-  let result = await db.query('INSERT INTO cart_items SET food = ?, amount = ?, user = ?', [cartItem.food, cartItem.amount, request.session.user.id])
-  response.json(result)
-})
-
-app.get('/rest/cart', async (request, response) => {
-  // check if user exists before writing
-  if(!request.session.user){
-    response.status(401) // unauthorised
-    response.json({error:'not logged in'})
-    return;
-  }
-  let cart = await db.query('SELECT * FROM cart WHERE user = ?', [request.session.user.id])
-  response.json(cart)
-})
-
-app.delete('/rest/cart', async (request, response) => {
-  // check if user exists before writing
-  if(!request.session.user){
-    response.status(401) // unauthorised
-    response.json({error:'not logged in'})
-    return;
-  }
-  let result = await db.query('DELETE * FROM cart_items WHERE user = ?', [request.session.user.id])
-  response.json(result)
-})
-
-app.delete('/rest/cart-item/:id', async (request, response) => {
-  // check if user exists before writing
-  if(!request.session.user){
-    response.status(401) // unauthorised
-    response.json({error:'not logged in'})
-    return;
-  }
-  let result = await db.query('DELETE FROM cart_items WHERE id = ? AND user = ?', [request.params.id, request.session.user.id])
-  response.json(result)
 })
 
 // registrera en ny användare
@@ -178,6 +160,50 @@ app.delete('/rest/login', async (request, response) => {
   } )
 })
 
+app.get('/rest/cart', async (request, response) => {
+  // check if user exists before writing
+  if(!request.session.user){
+    response.status(401) // unauthorised
+    response.json({error:'not logged in'})
+    return;
+  }
+  let cart = await db.query('SELECT * FROM cart WHERE user = ?', [request.session.user.id])
+  response.json(cart)
+})
+
+app.delete('/rest/cart', async (request, response) => {
+  // check if user exists before writing
+  if(!request.session.user){
+    response.status(401) // unauthorised
+    response.json({error:'not logged in'})
+    return;
+  }
+  let result = await db.query('DELETE * FROM cart_items WHERE user = ?', [request.session.user.id])
+  response.json(result)
+})
+
+app.delete('/rest/cart-item/:id', async (request, response) => {
+  // check if user exists before writing
+  if(!request.session.user){
+    response.status(401) // unauthorised
+    response.json({error:'not logged in'})
+    return;
+  }
+  let result = await db.query('DELETE FROM cart_items WHERE id = ? AND user = ?', [request.params.id, request.session.user.id])
+  response.json(result)
+})
+
+app.post('/rest/cart-item', async (request, response) => {
+  // check if user exists before writing
+  if(!request.session.user){
+    response.status(401) // unauthorised
+    response.json({error:'not logged in'})
+    return;
+  }
+  let cartItem = request.body
+  let result = await db.query('INSERT INTO cart_items SET food = ?, amount = ?, user = ?', [cartItem.food, cartItem.amount, request.session.user.id])
+  response.json(result)
+})
 
 // start av webbservern
 app.listen(3000, async () => {

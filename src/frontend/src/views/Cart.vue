@@ -21,7 +21,8 @@ export default {
         placeOrder(){
           let products = this.$store.state.cart
           console.log(products)
-          this.$store.dispatch('createOrder', products) //skicka med cart, glöm ej skicka med rätt property-namn etc
+          this.$store.dispatch('createOrder', products)
+          this.$router.push('/order')
         }
       },
       computed: {
