@@ -14,10 +14,11 @@
       </form>
       </li>
       <li>
-        <router-link to="/login">Log in</router-link>
+        <router-link v-if="!loggedIn" to="/login">Sign in</router-link>
+        <router-link v-if="loggedIn" to="/account">My Account</router-link>
       </li>
       <li>
-        <i class="fas fa-shopping-basket"></i> <!-- lägg til länk till cart -->
+        <span class="fas fa-shopping-basket"><router-link to="/cart"></router-link></span> <!-- lägg til länk till cart -->
       </li>
     </ul>
   <!-- <CartOffCanvas/> -->
@@ -34,10 +35,10 @@ export default {
     CartOffCanvas,
     SecondaryNav
   },
-  data(){
-    return{
-      search: ''
-    }
+  computed: {
+    loggedIn(){
+      return this.$store.state.user.loggedIn
+    },
   }
   
 }
@@ -45,6 +46,16 @@ export default {
 </script>
 
 <style scoped>
+i:hover{
+  cursor: pointer;
+}
+a:hover{
+  cursor: pointer;
+}
+router-link{
+  text-decoration: none;
+  color: white;
+}
 button{
     margin: 0 2px;
 }

@@ -68,10 +68,15 @@ app.get("/rest/order", async (req, res) => {
 })
 
 app.post("/rest/order", async (req, res) => {
-  let id = req.body.id
+  if(!request.session.user){
+    response.status(401) // unauthorised
+    response.json({error:'not logged in'})
+    return;
+  }
+  //skicka med ordenrns totala värde?
   let cart = req.body.cart
   console.log(cart)
-  let order = await db.query("INSERT INTO orders SET user_id = ?", [id])
+  let order = await db.query("INSERT INTO orders SET user_id = ?", [req.session.user.id])
   if(order.insertId){
     cart.forEach(async (item) => {
       item["order_id"] = order.insertId

@@ -7,10 +7,9 @@
             <div class="product-description">
                 <p class="product-title">{{product.title}}</p>
                 <p>{{product.description}}</p>
-                <p>{{product.category}}</p>
                 <p class="price">{{product.price}} kr</p>
             </div>
-            <a class="btn btn-outline"><router-link :to="'/product/' + product.id">Buy</router-link></a>
+            <button @click="viewProduct" type="button">Buy</button>
             </div>
         </div>
 </template>
@@ -19,8 +18,9 @@
 export default {
     props: ["product"],
     methods: {
-      addToCart(){
-        this.$store.commit('addToCart', this.product)
+      viewProduct(){
+        this.$store.commit('setProduct', this.product)
+        this.$router.push('/product')
       }
     }
 }

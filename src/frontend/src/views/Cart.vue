@@ -18,7 +18,7 @@ export default {
       },
       methods: {
         placeOrder(){
-          this.$store.dispatch('createOrder()') //skicka med cart och user id etc, glöm ej skicka med rätt property-namn etc
+          this.$store.dispatch('createOrder()', cart) //skicka med cart, glöm ej skicka med rätt property-namn etc
         }
       },
       computed: {

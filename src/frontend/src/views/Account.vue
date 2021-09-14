@@ -7,6 +7,11 @@
       <p>Personal Information</p>
       <p>My Orders</p>
       <button @click="getOrders">orders</button>
+      <div>
+          <button @click="logout">
+              Logout
+          </button>
+      </div>
   </div>
 </template>
 
@@ -15,6 +20,10 @@ export default {
     methods:{
         getOrders(){
             this.$store.dispatch('getOrderHistory')
+        },
+        logout(){
+            this.$store.dispatch('logout')
+            this.$router.push('/')
         }
     },
     computed:{

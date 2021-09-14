@@ -135,6 +135,7 @@ const store = createStore({
         let res = await fetch('/rest/login', {
             method: 'delete'
         })
+        
         dispatch('getLoggedInUser')
     },
     async getOrderHistory({commit}){
@@ -149,11 +150,11 @@ const store = createStore({
         let data = await res.json()
         commit('setOrder', data)
     },
-    async crateOrder({dispatch}, {id, cart}){
+    async createOrder({dispatch}, {cart}){
         let res = await fetch('/rest/order', {
             method: 'post',
             headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({id, cart})
+            body: JSON.stringify({cart})
         })
         let data = await res.json()
         console.log(data)
