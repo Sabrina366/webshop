@@ -1,17 +1,23 @@
 <template>
   <nav>
-    <div class="menu-item"><a href="#">Cat</a></div>
-    <div  class="menu-item"><a href="#">Cat</a>
-    </div>
-    <div class="menu-item" @mouseenter="isOpen = !isOpen">
-      <a href="">Dog</a>
+    <div class="menu-item"><a href="#">Small Pets</a></div>
+    <div class="menu-item" @mouseenter="isCatOpen = !isCatOpen">
+      <a href="">Cat</a>
     <transition name="fade" appear>
-      <div class="sub-menu" v-if="isOpen">
-        <Category  v-for="(c, index) of categories" :key="index" :category="c" />
+      <div class="sub-menu" v-if="isCatOpen">
+        <Category  v-for="(c, index) of cat" :key="index" :category="c" />
       </div>
     </transition>
   </div>
-    <div class="menu-item"><a href="#">Cat</a></div>
+    <div class="menu-item" @mouseenter="isDogOpen = !isDogOpen">
+      <a href="">Dog</a>
+    <transition name="fade" appear>
+      <div class="sub-menu" v-if="isDogOpen">
+        <Category  v-for="(d, index) of dog" :key="index" :category="d" />
+      </div>
+    </transition>
+  </div>
+    <div class="menu-item"><a href="#">Horse</a></div>
   </nav>
 </template>
 
@@ -23,12 +29,18 @@ export default {
   },
   data (){
     return{
-      isOpen: false
+      isDogOpen: false,
+      isCatOpen: false
   }
 },
 computed: {
-  categories(){
-    return this.$store.state.categories
+  dog(){
+    return this.$store.state.categories.filter(cat =>
+        cat.name.includes("Dog"))
+  },
+  cat(){
+    return this.$store.state.categories.filter(cat =>
+        cat.name.includes("Cat"))
   }
 }
 
