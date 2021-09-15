@@ -10,7 +10,7 @@
       <li>
         <form>
         <input v-model="search" type="search" placeholder="Search for a product..." />
-        <button @click="getorder" type="button">Search</button>
+        <button type="button">Search</button>
       </form>
       </li>
       <li>
@@ -36,9 +36,7 @@ export default {
     SecondaryNav
   },
   methods:{
-    getorder(){
-      this.$store.dispatch('getOrder', 71)
-    }
+    
   },
   computed: {
     loggedIn(){
