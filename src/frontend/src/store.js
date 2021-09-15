@@ -65,7 +65,6 @@ const store = createStore({
                 }
             })
             orderhistory.push(element)
-            
         });
         console.log(orderhistory)
         state.orderHistory = orderhistory
@@ -111,6 +110,10 @@ const store = createStore({
             }
         }
         updateLocalStorage(state.cart)
+     },
+     emptyCart(state){
+        state.cart = [],
+        localStorage.removeItem('cart')
      },
      setSelectedCategory(state, category){
         this.state.selectedCategory = category

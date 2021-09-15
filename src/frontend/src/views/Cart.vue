@@ -28,6 +28,7 @@ export default {
           console.log(products)
           this.$store.dispatch('createOrder', products)
           this.$router.push('/order')
+          this.$store.commit('emptyCart')
         }
       },
       computed: {
