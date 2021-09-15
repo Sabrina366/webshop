@@ -8,6 +8,9 @@
     <div>
         <Product v-for="(p, index) of order.products" :key="index" :product="p"/>
     </div>
+    <div>
+        <p>Total Price: {{total_price}}kr</p>
+    </div>
     </div>
 </template>
 
@@ -21,9 +24,10 @@ export default {
         order(){
             console.log(this.$store.state.order)
             return this.$store.state.order
-            
         },
-          
+            total_price(){
+      return this.$store.state.order.products.reduce((a,b) => (a + b.price*b.quantity), 0)
+    }
     }
 
 }

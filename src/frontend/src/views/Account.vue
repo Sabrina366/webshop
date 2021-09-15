@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div calss="account-page">
       <div>
         <h4>My TinyPaws</h4>
         <p>Welcome to your page {{user.first_name}}!</p>
@@ -19,13 +19,17 @@
             <strong>My Orders</strong>
             <span>
                 <div v-for="(orders, index) in orderHistory" :key="index" >
-                            <p>Ordernumber {{orders.id}}</p>
-                            <p>Order Date {{orders.timestamp}}</p>
+                    <div>
+                        <p>Ordernumber {{orders.id}}</p>
+                        <p>Order Date {{orders.timestamp}}</p>
+                    </div >
                             <ul>
                                 <li class="groupItems" v-for="(item,index) in orders.items" :key="index">
-                                    <p>Item {{item.title}}</p>
-                                    <p>quantity {{item.quantity}}</p>
-                                    <p>price {{item.price*item.quantity}}</p>
+                                    <div>
+                                    <p>{{item.title}}</p>
+                                    <p>quantity: {{item.quantity}}</p>
+                                    <p>price {{item.price*item.quantity}}kr</p>
+                                    </div>
                                 </li>
                             </ul>
                         </div> 
@@ -50,7 +54,8 @@ export default {
         logout(){
             this.$store.dispatch('logout')
             this.$router.push('/')
-        }
+        },
+
     },
     computed:{
         user(){
@@ -58,11 +63,15 @@ export default {
         },
         orderHistory(){
             return this.$store.state.orderHistory
-        }
+        },
+        
     }
 }
 </script>
 
-<style>
+<style scoped>
+li{
+    list-style: none;
+}
 
 </style>

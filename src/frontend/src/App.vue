@@ -22,15 +22,16 @@ export default{
 
 </script>
 
-<style>
+<style >
+
 *{
-  box-sizing: border-box;
-  margin: 0;
+  margin:0;
   padding: 0;
-} 
-#application{
-  width: 100vw;
-  min-height: 100vh; 
+}
+#app{
+
+  box-sizing: border-box;
+  text-align: center;
 }
 </style>
 

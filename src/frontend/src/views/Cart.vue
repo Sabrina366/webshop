@@ -2,7 +2,12 @@
   <div >
     <h3>In Cart</h3>
     <div>
-    <CartItem v-for="(p, index) of cart" :key="index" :product="p"/>
+      <div>
+        <CartItem v-for="(p, index) of cart" :key="index" :product="p"/>
+      </div>
+    <div>
+      <p>Total Price: {{total_price}}</p>
+    </div>
     <div >
         <button @click="placeOrder" type="button" >Checkout</button>
     </div>
@@ -29,6 +34,9 @@ export default {
         cart(){
        return this.$store.state.cart;
     },
+    total_price(){
+      return this.$store.state.cart.reduce((a,b) => (a + b.price*b.quantity), 0)
+    }
     
   }
 

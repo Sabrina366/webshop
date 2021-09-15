@@ -55,16 +55,13 @@ i:hover{
 a:hover{
   cursor: pointer;
 }
-router-link{
+nav{
   text-decoration: none;
-  color: white;
 }
 button{
     margin: 0 2px;
 }
-button:hover{
-    background-color: #e0ecd2
-}
+
 .wrapper{
     width: 100%;
     margin: 0 auto;
@@ -83,6 +80,8 @@ nav ul{
 }
 ul{
     background-color:lightblue;
+  font-family: 'DM Serif Display', serif;
+
 }
 nav li:hover{
     

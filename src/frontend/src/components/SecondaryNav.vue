@@ -1,7 +1,7 @@
 <template>
   <nav>
     <div class="menu-item"><a href="#">Small Pets</a></div>
-    <div class="menu-item" @mouseenter="isCatOpen = !isCatOpen">
+    <div class="menu-item" @click.prevent="isCatOpen = !isCatOpen">
       <a href="">Cat</a>
     <transition name="fade" appear>
       <div class="sub-menu" v-if="isCatOpen">
@@ -9,7 +9,7 @@
       </div>
     </transition>
   </div>
-    <div class="menu-item" @mouseenter="isDogOpen = !isDogOpen">
+    <div class="menu-item" @click.prevent="isDogOpen = !isDogOpen">
       <a href="">Dog</a>
     <transition name="fade" appear>
       <div class="sub-menu" v-if="isDogOpen">
@@ -49,6 +49,8 @@ computed: {
   
 <style scoped>
 nav {
+  font-family: 'DM Serif Display', serif;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -58,13 +60,13 @@ nav {
  nav .sub-menu{
   position: absolute;
   background-color: lightblue;
-  padding: 10px;
+  padding: 5px;
   width: max-content;
   color: white;
 }
 nav .menu-item{
   cursor: pointer;
-  padding: 10px;
+  padding: 5px;
 }
 nav .menu-item.active,
 nav .menu-item:hover {
